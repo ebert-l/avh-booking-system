@@ -3,26 +3,36 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	"os"
 )
 
 var db *sql.DB
 
 // CreateDatabase creates database and all necessary tables, constraints, triggers and values
 func CreateDatabase() {
-	loginInfo := fmt.Sprintf("%s:%s@tcp(%s:%s)/", os.Getenv("AVHBS_DB_USER"), os.Getenv("AVHBS_DB_PASS"), os.Getenv("AVHBS_DB_IP"), os.Getenv("AVHBS_DB_PORT"))
+	DB_User := getEnv("AVHBS_DB_USER", "avhbs_wails")
+	// DB_User := os.Getenv("AVHBS_DB_USER")
+	DB_Pass := getEnv("AVHBS_DB_PASS", "avhbs_wails")
+	// DB_Pass := os.Getenv("AVHBS_DB_PASS")
+	DB_IP := getEnv("AVHBS_DB_IP", "127.0.0.1")
+	// DB_IP := os.Getenv("AVHBS_DB_IP")
+	DB_Port := getEnv("AVHBS_DB_PORT", "3306")
+	// DB_Port := os.Getenv("AVHBS_DB_PORT")
+	DB_Name := getEnv("AVHBS_DB_NAME", "avhbs_wails")
+	// DB_Name := os.Getenv("AVHBS_DB_NAME")
+	loginInfo := fmt.Sprintf("%s:%s@tcp(%s:%s)/", DB_User, DB_Pass, DB_IP, DB_Port)
+	// loginInfo := fmt.Sprintf("%s:%s@tcp(%s:%s)/", os.Getenv("AVHBS_DB_USER"), os.Getenv("AVHBS_DB_PASS"), os.Getenv("AVHBS_DB_IP"), os.Getenv("AVHBS_DB_PORT"))
 	fmt.Println("Database Login Info:")
 	fmt.Println(loginInfo)
 	var err error
 	db, err = sql.Open("mysql", loginInfo)
 	HandleDatabaseError(err)
 
-	createDatabaseQuery := fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %s;", os.Getenv("AVHBS_DB_NAME"))
+	createDatabaseQuery := fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %s;", DB_Name)
 	_, err = db.Exec(createDatabaseQuery)
 	HandleDatabaseError(err)
 	db.Close()
 
-	loginInfo = loginInfo + os.Getenv("AVHBS_DB_NAME") + "?parseTime=true"
+	loginInfo = loginInfo + DB_Name + "?parseTime=true"
 	db, err = sql.Open("mysql", loginInfo)
 	HandleDatabaseError(err)
 
@@ -199,7 +209,7 @@ func CreateDatabase() {
 	// reconnect
 	var version string
 	db.QueryRow("SELECT VERSION()").Scan(&version)
-	newLoginInfo := fmt.Sprintf("%s:***@tcp(%s:%s)/%s", os.Getenv("AVHBS_DB_USER"), os.Getenv("AVHBS_DB_IP"), os.Getenv("AVHBS_DB_PORT"), os.Getenv("AVHBS_DB_NAME"))
-	fmt.Println("AVHBS_DB_NAME:", os.Getenv("AVHBS_DB_NAME"))
+	newLoginInfo := fmt.Sprintf("%s:***@tcp(%s:%s)/%s", DB_User, DB_IP, DB_Port, DB_Name)
+	fmt.Println("AVHBS_DB_NAME:", DB_Name)
 	fmt.Printf("Database set up complete: %s\n-> %s\n", version, newLoginInfo)
 }

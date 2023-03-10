@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"log"
+	"os"
 )
 
 // HandleDatabaseError logs error to console
@@ -28,4 +29,13 @@ func TxRowsAffected(res sql.Result, tx *sql.Tx) {
 	rowCnt, err := res.RowsAffected()
 	HandleDatabaseError(err)
 	log.Printf("ID = %d, affected = %d\n", lastID, rowCnt)
+}
+
+// Retrieve Environment variables and use a fallback if it is not yet set
+func getEnv(key, fallback string) string {
+	value := os.Getenv(key)
+	if len(value) == 0 {
+		return fallback
+	}
+	return value
 }
