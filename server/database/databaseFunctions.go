@@ -7,7 +7,7 @@ import (
 
 var db *sql.DB
 
-// CreateDatabase creates database and all necessary tables, constraints, triggers and values
+// CreateDatabase creates database and all necessary tables,s, triggers and values
 func CreateDatabase() {
 	DB_User := getEnv("AVHBS_DB_USER", "avhbs_wails")
 	// DB_User := os.Getenv("AVHBS_DB_USER")
@@ -36,7 +36,7 @@ func CreateDatabase() {
 	db, err = sql.Open("mysql", loginInfo)
 	HandleDatabaseError(err)
 
-	// create tables with constraints
+	// create tables withs
 	createUsersTable := `
 	CREATE TABLE IF NOT EXISTS users(
 		id INT NOT NULL AUTO_INCREMENT,
@@ -142,27 +142,27 @@ func CreateDatabase() {
 	HandleDatabaseError(err)
 
 	// add foreign keys
-	_, err = db.Exec("ALTER TABLE users ADD CONSTRAINT FOREIGN KEY (client) REFERENCES clients(name);")
+	_, err = db.Exec("ALTER TABLE users ADD FOREIGN KEY (client) REFERENCES clients(name);")
 	HandleDatabaseError(err)
-	_, err = db.Exec("ALTER TABLE items ADD CONSTRAINT FOREIGN KEY (client) REFERENCES clients(name);")
+	_, err = db.Exec("ALTER TABLE items ADD FOREIGN KEY (client) REFERENCES clients(name);")
 	HandleDatabaseError(err)
-	_, err = db.Exec("ALTER TABLE favorite_items ADD CONSTRAINT FOREIGN KEY (user_id) REFERENCES users(id);")
+	_, err = db.Exec("ALTER TABLE favorite_items ADD FOREIGN KEY (user_id) REFERENCES users(id);")
 	HandleDatabaseError(err)
-	_, err = db.Exec("ALTER TABLE favorite_items ADD CONSTRAINT FOREIGN KEY (item_id) REFERENCES items(id);")
+	_, err = db.Exec("ALTER TABLE favorite_items ADD FOREIGN KEY (item_id) REFERENCES items(id);")
 	HandleDatabaseError(err)
-	_, err = db.Exec("ALTER TABLE bookings ADD CONSTRAINT FOREIGN KEY (client) REFERENCES clients(name);")
+	_, err = db.Exec("ALTER TABLE bookings ADD FOREIGN KEY (client) REFERENCES clients(name);")
 	HandleDatabaseError(err)
-	_, err = db.Exec("ALTER TABLE bookings ADD CONSTRAINT FOREIGN KEY (user_id) REFERENCES users(id);")
+	_, err = db.Exec("ALTER TABLE bookings ADD FOREIGN KEY (user_id) REFERENCES users(id);")
 	HandleDatabaseError(err)
-	_, err = db.Exec("ALTER TABLE bookings ADD CONSTRAINT FOREIGN KEY (item_id) REFERENCES items(id);")
+	_, err = db.Exec("ALTER TABLE bookings ADD FOREIGN KEY (item_id) REFERENCES items(id);")
 	HandleDatabaseError(err)
-	_, err = db.Exec("ALTER TABLE payments ADD CONSTRAINT FOREIGN KEY (client) REFERENCES clients(name);")
+	_, err = db.Exec("ALTER TABLE payments ADD FOREIGN KEY (client) REFERENCES clients(name);")
 	HandleDatabaseError(err)
-	_, err = db.Exec("ALTER TABLE payments ADD CONSTRAINT FOREIGN KEY (user_id) REFERENCES users(id);")
+	_, err = db.Exec("ALTER TABLE payments ADD FOREIGN KEY (user_id) REFERENCES users(id);")
 	HandleDatabaseError(err)
-	_, err = db.Exec("ALTER TABLE feedback ADD CONSTRAINT FOREIGN KEY (client) REFERENCES clients(name);")
+	_, err = db.Exec("ALTER TABLE feedback ADD FOREIGN KEY (client) REFERENCES clients(name);")
 	HandleDatabaseError(err)
-	_, err = db.Exec("ALTER TABLE passwords ADD CONSTRAINT FOREIGN KEY (client) REFERENCES clients(name);")
+	_, err = db.Exec("ALTER TABLE passwords ADD FOREIGN KEY (client) REFERENCES clients(name);")
 	HandleDatabaseError(err)
 
 	// add triggers

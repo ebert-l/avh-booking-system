@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 )
@@ -35,6 +36,7 @@ func TxRowsAffected(res sql.Result, tx *sql.Tx) {
 func getEnv(key, fallback string) string {
 	value := os.Getenv(key)
 	if len(value) == 0 {
+		fmt.Println(fmt.Sprintf("Environment Variable '%s' was not found. '%s' was used as a fallback.", key, fallback))
 		return fallback
 	}
 	return value
