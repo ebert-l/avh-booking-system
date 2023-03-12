@@ -17,7 +17,8 @@
         <!-- search results -->
         <!--<div class="buttons" v-if="searchResults !== null">-->
         <div class="buttons" v-if="searchResults.length > 0">
-            <button class="button" v-for="user in searchResults" :key="user" :class="buttonColor(selectedUser, user)"
+            <!-- :key="user" -->
+            <button class="button" v-for="user in searchResults" :class="buttonColor(selectedUser, user)"
                 @click="selectUser(user)">
                 {{ displayUserName(user) }}
             </button>

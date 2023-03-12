@@ -1,7 +1,6 @@
 import User from './models/User'
 import UserDict from './models/UserDict'
 import { useUserStore } from './stores/userStore'
-
 const userStore = useUserStore()
 
 // @devs: functions are sorted by name
