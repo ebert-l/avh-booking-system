@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import User, { nullUser } from '../models/User'
 import { sortUserList } from '../helper'
+// import * as go from '../wailsjs/go/main/App'
 
 export const useUserStore = defineStore('userStore', {
     state: () => ({
@@ -10,6 +11,7 @@ export const useUserStore = defineStore('userStore', {
     getters: {
         fetchAllUsers(): void {
             window.go.main.App.GetAllUsers().then((response: User[]) => {
+            // go.GetAllUsers().then((response: User[]) => {
                 this.userList = sortUserList(response)
             })
         },

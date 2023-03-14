@@ -3,9 +3,8 @@ import UserDict from './models/UserDict'
 import { useUserStore } from './stores/userStore'
 const userStore = useUserStore()
 
-// @devs: functions are sorted by name
-
-export function buttonColor(selectedUser: User, user: User): string {
+// @devs: functions are sorted by name    
+export function buttonColor(selectedUser: User, user: User): any {
     if (selectedUser === user) {
         return "is-link"
     } else if (user.Balance < user.MaxDebt) {
@@ -16,13 +15,13 @@ export function buttonColor(selectedUser: User, user: User): string {
         return ""
     }
 }
-
+    
 export function displayUserName(user: User): string {
     if (user === undefined) {
         return "???"
     } else
-        if (user.BierName !== "") {
-            return user.BierName
+    if (user.BierName !== "") {
+        return user.BierName
         } else if (user.LastName !== "" && user.FirstName !== "") {
             return user.FirstName + " " + user.LastName[0] + "."
         } else if (user.FirstName !== "") {
@@ -30,16 +29,16 @@ export function displayUserName(user: User): string {
         } else {
             return "???"
         }
-}
-
-export function displayUserNameFull(user: User): string {
-    let name = ""
-    if (user === undefined) {
-        return "???"
-    } else {
-        if (user.FirstName !== "") {
-            name = name.concat(user.FirstName)
-        }
+    }
+    
+    export function displayUserNameFull(user: User): string {
+        let name = ""
+        if (user === undefined) {
+            return "???"
+        } else {
+            if (user.FirstName !== "") {
+                name = name.concat(user.FirstName)
+            }
         if (user.BierName !== "") {
             name = name.concat(" (", user.BierName, ")")
         }

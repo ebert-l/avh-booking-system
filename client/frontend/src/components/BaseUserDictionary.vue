@@ -37,14 +37,19 @@ const userStore = useUserStore()
 
 export default defineComponent({
     data() {
-        return {
-            userDict: [] as UserDict[]
-        }
+      return {
+          userDict:{} as UserDict
+      }
     },
     computed: {
-        selectedUser(): User {
-            return userStore.getSelectedUser
-        }
-  }
+      selectedUser(): User {
+          return userStore.getSelectedUser
+      }
+    },
+    methods: {
+        displayUserName,
+        buttonColor,
+        selectUser
+    }
 });
 </script>

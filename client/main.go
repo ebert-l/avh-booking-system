@@ -29,7 +29,7 @@ func main() {
 		MaxHeight:         1440,
 		DisableResize:     false,
 		Fullscreen:        false,
-		Frameless:         true,
+		Frameless:         false,
 		StartHidden:       false,
 		HideWindowOnClose: false,
 		AlwaysOnTop:       false,
@@ -51,7 +51,7 @@ func main() {
 
 func getConfig() AvhbsConfig {
 
-	avhbsConfig := AvhbsConfig{"127.0.0.1:8081", "brenner"}
+	avhbsConfig := AvhbsConfig{"http://127.0.0.1:8081", "brenner"}
 	fmt.Println(avhbsConfig)
 	return avhbsConfig
 
